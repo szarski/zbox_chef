@@ -44,3 +44,34 @@
 
 
 package 'ntop'
+
+################################ SPINDOWN IDLE DRIVE ################################
+
+package 'sdparm'
+
+node[:spindown_idle_drive] = {
+  spindown_time: 30,
+  stats_file: '/tmp/spindown_idle_drive_temp_stats',
+  logfile: '/var/log/spindown_idle_drive.log',
+  drives: %w{sdb3}
+}
+
+template "/usr/bin/spindown_idle_drive" do
+  source "spindown_idle_drive.erb"
+  mode 0755
+  owner "root"
+  group "root"
+  variables(
+    :spindown_time => node[:spindown_idle_drive][:spindown_time],
+    :stats_file => node[:spindown_idle_drive][:stats_file],
+    :logfile => node[:spindown_idle_drive][:logfile]
+  )
+end
+
+node[:spindown_idle_drive][:drives].each do |drive_name|
+  cron "spindown_idle_drive" do
+    minute "*"
+    command "/usr/bin/spindown_idle_drive #{drive_name} >> #{node[:spindown_idle_drive][:logfile]} 2>&1"
+    user "root"
+  end
+end

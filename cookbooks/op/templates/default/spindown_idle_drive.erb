@@ -1,0 +1,34 @@
+disk=$1
+spindown_time_seconds=<%= @spindown_time %>
+
+# check if disk specified
+if [ ! -n "$disk" ]; then
+echo "No disk specified!"
+exit 1
+fi
+
+# create the logfile
+[ -f <%= @logfile %> ] || touch <%= @logfile %>
+
+# get disk stats
+disk_stats=`cat /proc/diskstats | grep $disk`
+
+# update stats file if its missing or changed
+if [ ! -f <%= @stats_file %> ] || [ ! "$disk_stats" = "`cat <%= @stats_file %>`" ]; then
+  echo "$disk_stats" > <%= @stats_file %>
+fi
+
+# check how much time passed since last read
+current_time=`date +%s`
+update_time=`stat <%= @stats_file %> --printf %Y`
+time_difference=$(($current_time - $update_time))
+spindown_time_reached=$(($time_difference > $spindown_time_seconds))
+
+# spin down if enough time passed
+echo "Disk last used $time_difference seconds ago." >> <%= @logfile %>
+if [ $spindown_time_reached = 0 ]; then
+echo "waiting..." >> <%= @logfile %>
+else
+echo "spinning down!" >> <%= @logfile %>
+  sdparm --flexible --command=stop /dev/$disk > <%= @logfile %>
+fi
