@@ -50,7 +50,7 @@ package 'ntop'
 package 'sdparm'
 
 node[:spindown_idle_drive] = {
-  spindown_time: 30,
+  spindown_time: 300, #seconds
   stats_file: '/tmp/spindown_idle_drive_temp_stats',
   logfile: '/var/log/spindown_idle_drive.log',
   drives: %w{sdb3}
