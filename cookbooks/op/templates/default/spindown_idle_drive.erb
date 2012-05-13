@@ -9,6 +9,7 @@ fi
 
 # create the logfile
 [ -f <%= @logfile %> ] || touch <%= @logfile %>
+echo "--------------- `date` ---------------" >> <%= @logfile %>
 
 # get disk stats
 disk_stats=`cat /proc/diskstats | grep $disk`
@@ -30,5 +31,5 @@ if [ $spindown_time_reached = 0 ]; then
 echo "waiting..." >> <%= @logfile %>
 else
 echo "spinning down!" >> <%= @logfile %>
-  sdparm --flexible --command=stop /dev/$disk > <%= @logfile %>
+  sdparm --flexible --command=stop /dev/$disk >> <%= @logfile %>
 fi

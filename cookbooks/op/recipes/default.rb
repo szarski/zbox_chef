@@ -71,7 +71,7 @@ end
 node[:spindown_idle_drive][:drives].each do |drive_name|
   cron "spindown_idle_drive" do
     minute "*"
-    command "/usr/bin/spindown_idle_drive #{drive_name} >> #{node[:spindown_idle_drive][:logfile]} 2>&1"
+    command "/usr/bin/spindown_idle_drive #{drive_name} > #{node[:spindown_idle_drive][:logfile]} 2>&1"
     user "root"
   end
 end
