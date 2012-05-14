@@ -75,3 +75,21 @@ node[:spindown_idle_drive][:drives].each do |drive_name|
     user "root"
   end
 end
+
+################################ AUTOLOGIN ################################
+
+settings = {
+  "AutoLoginEnable" => "false",
+  "AutoLoginDelay" => "10",
+  "AutoLoginUser" => "guest"
+}
+
+replaceables = settings.collect{|attribute_name, value| ["#{attribute_name}.*", "#{attribute_name}=#{value}"]}
+filename="/etc/kde4/kdm/kdmrc"
+script = "sed -i'.backup_#{Time.now.to_i}' #{replaceables.collect{|a,b| "-e 's/#{a}/#{b}/'"}.join(' ')} #{filename}"
+
+bash "update kde autologin configuration" do
+  user "root"
+  action :run
+  code script
+end
