@@ -1,0 +1,11 @@
+restrict access via ssh only to users that belong to the sshaccess group
+
+mount the media drive
+
+restrict access to the media drive to users that belong to the mediaaccess group
+
+install and configure transmission
+
+install mopidy, create mopidy and mopidy_killer upstart jobs
+
+switch alsa to mutliuser mode
