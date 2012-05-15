@@ -79,7 +79,7 @@ end
 ################################ AUTOLOGIN ################################
 
 settings = {
-  "AutoLoginEnable" => "false",
+  "AutoLoginEnable" => "true",
   "AutoLoginDelay" => "10",
   "AutoLoginUser" => "guest"
 }
