@@ -1,0 +1,12 @@
+mpd_host||||<%= @mopidy_host %>
+mpd_port||||6600
+consume||||0
+repeat||||0
+random||||0
+crossfade||||0
+volume||||100
+lastfm_user||||
+lastfm_scrobbling||||0
+lastfm_autocorrect||||0
+theme||||BrushedAluminium.css
+scrobblepercent||||50

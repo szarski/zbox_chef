@@ -93,3 +93,62 @@ bash "update kde autologin configuration" do
   action :run
   code script
 end
+
+################################ ROMPR ################################
+
+#(JS) according to: http://sourceforge.net/p/rompr/wiki/Installation/
+
+package 'apache2'
+package 'php5-curl'
+package 'imagemagick'
+package 'libapache2-mod-php5'
+
+node[:rompr] = {
+  :download_source => "http://downloads.sourceforge.net/project/rompr/rompr-0.08.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Frompr%2Ffiles%2F&ts=1338845870&use_mirror=switch",
+  :deploy_dir => "/var/www/rompr",
+  :config_file => "/etc/apache2/conf.d/rompr.conf",
+  :mopidy_host => "192.168.1.2"
+}
+
+remote_file "/tmp/rompr.zip" do
+ source node[:rompr][:download_source]
+ mode "0777"
+end
+
+execute "unzip archive" do
+ command "[ -d /tmp/rompr ] && rm -rf /tmp/rompr; cd /tmp && unzip /tmp/rompr.zip && rm -rf /tmp/rompr.zip"
+ action :run
+end
+
+execute "deploy" do
+ command "[ -d #{node[:rompr][:deploy_dir]} ] && rm -rf #{node[:rompr][:deploy_dir]};mv /tmp/rompr #{node[:rompr][:deploy_dir]} && chown -R www-data #{node[:rompr][:deploy_dir]} && chmod -R 760 #{node[:rompr][:deploy_dir]} && rm -rf /tmp/rompr"
+ action :run
+end
+
+execute "set the configuration file" do
+  temp_config_file = "#{node[:rompr][:deploy_dir]}/apache_conf.d/rompr.conf"
+  script = "sed -e 's/#{"/PATH-TO-ROMPR".gsub('/','\\/')}/#{node[:rompr][:deploy_dir].gsub('/','\\/')}/' #{temp_config_file} > #{node[:rompr][:config_file]}"
+  puts script
+  command script
+  action :run
+end
+
+template "#{node[:rompr][:deploy_dir]}/prefs/prefs" do
+  source "prefs"
+  mode 0440
+  owner "www-data"
+  group "www-data"
+  variables(
+    :mopidy_host => node[:rompr][:mopidy_host]
+  )
+end
+
+execute "enable apache modules" do
+  command %w{expires headers deflate php5}.collect{|m| "a2enmod #{m}"}.join(';')
+  action :run
+end
+
+execute "restart apache" do
+  command "service apache2 restart"
+  action :run
+end
