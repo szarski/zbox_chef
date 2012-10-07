@@ -1,3 +1,7 @@
 {
-    "run_list": [ "recipe[op::default]" ]
+//    "run_list": [ "recipe[op::default]" ]
+    "run_list": [
+      "recipe[mandatory::networking]",
+      "recipe[multimedia::mopidy]"
+    ]
 }
