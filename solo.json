@@ -2,6 +2,7 @@
 //    "run_list": [ "recipe[op::default]" ]
     "run_list": [
       "recipe[mandatory::networking]",
-      "recipe[multimedia::mopidy]"
+      "recipe[multimedia::mopidy]",
+      "recipe[xbmc::core]"
     ]
 }
