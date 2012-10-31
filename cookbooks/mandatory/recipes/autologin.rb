@@ -1,4 +1,12 @@
 if node[:autologin][:enabled]
+
+  #(JS) TODO: this is a nasty hack,
+  #           lightdm is trying to run
+  #           the lowercase xbmc.desktop
+  link "/usr/share/xsessions/xbmc.desktop" do
+    to "/usr/share/xsessions/XBMC.desktop"
+  end
+
   execute "create autologin user" do
     command "adduser #{node[:autologin][:username]}"
     action :run
