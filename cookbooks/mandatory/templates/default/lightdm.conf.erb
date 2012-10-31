@@ -1,0 +1,9 @@
+
+[SeatDefaults]
+user-session=<%= @default_session %>
+greeter-session=unity-greeter
+
+<% if @autologin_enabled -%>
+autologin-user=<%= @autologin_user %>
+autologin-user-timeout=<%= @autologin_timeout %>
+<% end -%>
