@@ -1,4 +1,6 @@
-node[:autologin][:enabled] = true
-node[:autologin][:default_session] = "xbmc"
-node[:autologin][:username] = "xbmc"
-node[:autologin][:timeout] = 0
+node[:autologin] = {
+  :enabled => true,
+  :default_session => "xbmc",
+  :username => "xbmc",
+  :timeout => 0
+}
