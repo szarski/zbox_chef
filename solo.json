@@ -3,7 +3,10 @@
     "run_list": [
       "recipe[mandatory::networking]",
       "recipe[mandatory::autologin]",
+      "recipe[mandatory::fstab]",
       "recipe[multimedia::mopidy]",
-      "recipe[xbmc::core]"
+      "recipe[multimedia::software_sound_mixing]",
+      "recipe[xbmc::core]",
+      "recipe[transmission]"
     ]
 }
