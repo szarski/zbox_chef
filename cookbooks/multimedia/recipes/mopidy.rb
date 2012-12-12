@@ -33,7 +33,13 @@ template "/home/#{system_username}/.config/mopidy/settings.py" do
   variables(
     :mopidy_host => node[:mopidy][:hostname],
     :spotify_username => node[:mopidy][:spotify_username],
-    :spotify_password => node[:mopidy][:spotify_password]
+    :spotify_password => node[:mopidy][:spotify_password],
+
+    :lastfm_username => node[:mopidy][:lastfm_username],
+    :lastfm_password => node[:mopidy][:lastfm_password],
+
+    :mixer => node[:mopidy][:mixer],
+    :output => node[:mopidy][:output]
   )
 end
 

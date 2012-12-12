@@ -1,6 +1,16 @@
 MPD_SERVER_HOSTNAME = u'<%= @mopidy_host %>'
 SPOTIFY_USERNAME = u'<%= @spotify_username %>'
 SPOTIFY_PASSWORD = u'<%= @spotify_password %>'
+<% if @lastfm_username -%>
 
-MIXER = u'alsamixer'
-OUTPUT = u'alsasink'
+LASTFM_USERNAME = u'<%= @lastfm_username %>'
+LASTFM_PASSWORD = u'<%= @lastfm_password %>'
+<% end -%>
+<% if @mixer -%>
+
+MIXER = u'<%= @mixer %>'
+<% end -%>
+<% if @output -%>
+
+OUTPUT = u'<%= @output %>'
+<% end -%>
