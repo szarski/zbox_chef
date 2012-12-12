@@ -1,0 +1,36 @@
+#
+# Warning!! 
+#  Any local changes may be overwritten. File is managed by Opscode Chef.
+#
+Bluepill.application("sickbeard") do |app|
+
+  app.process("server") do |proc|
+
+    proc.uid = "<%= node["sickbeard"]["user"] %>"
+    proc.gid = "<%= node["sickbeard"]["group"] %>"
+
+    proc.working_dir = "<%= node["sickbeard"]["install_dir"] %>"
+    proc.start_command = "python SickBeard.py -p <%= node["sickbeard"]["listen_port"] %> --config <%= node["sickbeard"]["config_dir"] %>/sickbeard.ini --datadir <%= node["sickbeard"]["data_dir"] %>"
+
+    # We're letting Bluepill daemonize for us
+    proc.daemonize = true
+
+    # Logging
+    proc.stdout = proc.stderr = "<%= node["sickbeard"]["log_dir"] %>/sickbeard.log"
+
+    # Process Monitoring
+    proc.checks :cpu_usage, :every => 30.seconds, :below => 85, :times => 10        
+    proc.checks :mem_usage, :every => 30.seconds, :below => 1024.megabytes, :times => [3,5]
+    proc.checks :flapping, :times => 2, :within => 30.seconds, :retry_in => 7.seconds
+
+    # Child Processes
+    proc.monitor_children do |child_proc|
+      child_proc.checks :cpu_usage, :every => 30.seconds, :below => 50, :times => 10
+      child_proc.checks :mem_usage, :every => 30.seconds, :below => 256.megabytes, :times => [3,5]
+      child_proc.stop_command = "kill -QUIT {{PID}}"
+    end
+
+  end
+
+end
+
