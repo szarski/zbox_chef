@@ -47,6 +47,8 @@ default['transmission']['config_dir']       = '/var/lib/transmission-daemon/info
 default['transmission']['download_dir']     = '/var/lib/transmission-daemon/downloads'
 default['transmission']['incomplete_dir']   = '/var/lib/transmission-daemon/incomplete'
 default['transmission']['incomplete_dir_enabled'] = 'false'
+default['transmission']['watch_dir']        = '/var/lib/transmission-daemon/watch'
+default['transmission']['watch_dir_enabled'] = 'false'
 
 default['transmission']['speed_limit_down']         = 100 #KB/s
 default['transmission']['speed_limit_down_enabled'] = 'false'
