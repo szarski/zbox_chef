@@ -8,6 +8,10 @@
       "recipe[multimedia::software_sound_mixing]",
       "recipe[xbmc::core]",
       "recipe[xbmc::cpu_usage_fix]",
-      "recipe[transmission]"
+      "recipe[transmission]",
+      "recipe[bluepill]",
+      "recipe[apache2]",
+      "recipe[sickbeard]",
+      "recipe[sickbeard::apache_virtualhost]"
     ]
 }
