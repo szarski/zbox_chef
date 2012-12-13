@@ -5,3 +5,4 @@ cookbooks/multimedia/attributes/normal.rb
 cookbooks/transmission/attributes/normal.rb
 cookbooks/mandatory/attributes/normal.rb
 cookbooks/sickbeard/attributes/normal.rb
+cookbooks/bluepill/attributes/normal.rb
