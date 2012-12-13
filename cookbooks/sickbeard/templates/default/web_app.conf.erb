@@ -1,0 +1,21 @@
+NameVirtualHost *:80
+<VirtualHost *:80>
+  ServerName "sickbeard"
+  ProxyPreserveHost On
+  ProxyRequests On
+
+  <Location />
+    AuthType Basic
+    AuthName "Restricted Files"
+    AuthBasicProvider file
+    AuthUserFile /var/www/sickbeard/apache_passwd
+    Require user jacek
+  </Location>
+
+  ProxyPass / http://localhost:6669/
+  ProxyPassReverse / http://localhost:6669/
+
+  LogLevel info
+  ErrorLog /var/log/apache2/sickbeard-error.log
+  CustomLog /var/log/apache2/sickbeard-access.log combined
+</VirtualHost>
