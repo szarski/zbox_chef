@@ -38,3 +38,5 @@ default["sickbeard"]["install_style"] = 'git'
 # Git Options
 default["sickbeard"]["git_url"] = 'https://github.com/midgetspy/Sick-Beard.git'
 default["sickbeard"]["git_ref"] = '830b3b165877c880a7d9b029fa599479f9326f94'
+
+default["sickbeard"]["basicauth_users"] = [["user", "password"]]
