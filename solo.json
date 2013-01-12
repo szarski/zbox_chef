@@ -12,6 +12,7 @@
       "recipe[bluepill]",
       "recipe[apache2]",
       "recipe[sickbeard]",
+      "recipe[htpasswd]",
       "recipe[sickbeard::apache_virtualhost]"
     ]
 }
