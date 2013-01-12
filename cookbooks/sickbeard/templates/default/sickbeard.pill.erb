@@ -4,7 +4,7 @@
 #
 Bluepill.application("sickbeard") do |app|
 
-  app.process("server") do |proc|
+  app.process("sickbeard") do |proc|
 
     proc.uid = "<%= node["sickbeard"]["user"] %>"
     proc.gid = "<%= node["sickbeard"]["group"] %>"
